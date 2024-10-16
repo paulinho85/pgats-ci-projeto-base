@@ -6,9 +6,10 @@ name: 'Execução Agendada'
 # Regras de disparo da execução (Triggers/Gatilhos)
 # Gatilho de execução agendada = schedule
 
-on:    
+
+on:
    schedule:
-    - cron: '36 23 * * *'
+   - cron: '48 17 * * *'     
 
 
 jobs: 
