@@ -6,44 +6,38 @@ name: 'Execução Agendada'
 # Regras de disparo da execução (Triggers/Gatilhos)
 # Gatilho de execução agendada = schedule
 
-
 on:
   schedule:
-      - cron: '30 18 * * *'
+    - cron: '51 18 * * *'
 
+jobs:
+  # Descrição do Job
+  e2e-tests:
+    # Máquina que o job vai executar
+    runs-on: ['ubuntu-latest']
 
-jobs: 
+    # Passo-a-passo das ações do job
+    steps:
+      - uses: actions/checkout@v4
 
-    # Descrição do Job
-    e2e-tests:
+      # - uses: actions/setup-node@v4
+      #     with:
+      #         node-version: lts/*
 
-        # Máquina que o job vai executar
-        runs-on: ['ubuntu-latest']
+      - name: Instalando Yarn
+        run: npm install -g yarn
 
-        # Passo-a-passo das ações do job
-        steps:
+      - name: Instalando dependências
+        run: yarn
 
-            - uses: actions/checkout@v4
+      - name: Instalando Playwright
+        run: yarn playwright install
 
-            # - uses: actions/setup-node@v4
-            #     with:
-            #         node-version: lts/*
+      - name: Testes E2E
+        run: yarn run e2e
 
-            - name: Instalando Yarn
-              run: npm install -g yarn
-
-            - name: Instalando dependências
-              run: yarn
-
-            - name: Instalando Playwright
-              run: yarn playwright install
-              
-            - name: Testes E2E
-              run: yarn run e2e
-
-
-            - uses: actions/upload-artifact@v4
-              if: ${{ !cancelled() }}
-              with:
-                  name: relatorio-de-testes
-                  path: ./playwright-report
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: relatorio-de-testes
+          path: ./playwright-report
