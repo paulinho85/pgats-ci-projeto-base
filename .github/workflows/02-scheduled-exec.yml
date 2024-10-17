@@ -8,8 +8,8 @@ name: 'Execução Agendada'
 
 
 on:
-   schedule:
-    - cron: '20 00 * * *'     
+  schedule:
+      - cron: '30 18 * * *'
 
 
 jobs: 
