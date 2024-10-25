@@ -10,7 +10,6 @@ on:
   workflow_dispatch:
 
 jobs:
-
   inspetcion:
     runs-on: ubuntu-latest
     steps:
@@ -24,7 +23,7 @@ jobs:
 
       - name: Padronização de código (Lint)
         run: yarn lint
-        
+
   # Descrição do Job
   e2e-tests:
     # Máquina que o job vai executar
