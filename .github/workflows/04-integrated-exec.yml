@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  inspetcion:
+  inspection:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,6 +26,7 @@ jobs:
 
   unit:
     runs-on: ubuntu-latest
+    needs: [inspection]
 
     steps:
       - uses: actions/checkout@v4
@@ -43,6 +44,7 @@ jobs:
   e2e-tests:
     # Máquina que o job vai executar
     runs-on: ['ubuntu-latest']
+    needs: [unit]
 
     # Passo-a-passo das ações do job
     steps:
@@ -74,3 +76,7 @@ jobs:
         with:
           name: relatorio-de-testes
           path: ./playwright-report
+
+  deploy:
+    runs-on: ['ubuntu-latest']
+    needs: [e2e-tests]
